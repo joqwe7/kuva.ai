@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { SettingsModal } from './components/SettingsModal';
 import { ArchitectureInfo } from './components/ArchitectureInfo';
-import { generateImage, checkGenerationStatus, getModels } from './services/hordeService';
+import { generateImage, checkGenerationStatus } from './services/hordeService';
 import { AppSettings, DEFAULT_HORDE_API_KEY, Job, GenerationStatus } from './types';
 
 // Placeholder for images before they load
@@ -18,24 +18,16 @@ const App: React.FC = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [activeJob, setActiveJob] = useState<Job | null>(null);
   const [history, setHistory] = useState<Job[]>([]);
-  const [models, setModels] = useState<string[]>([]);
-  const [selectedModel, setSelectedModel] = useState('Anything-V5');
-  const [params, setParams] = useState({ width: 512, height: 512, steps: 30 });
+  
+  // Hardcoded single model as requested
+  const [selectedModel, setSelectedModel] = useState('AlbedoBase XL (SDXL)');
+  
+  // Default to 1024x1024 for SDXL
+  const [params, setParams] = useState({ width: 1024, height: 1024, steps: 30 });
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   // Polling ref
   const pollIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  // Load Models on Mount
-  useEffect(() => {
-    const fetchModels = async () => {
-        const m = await getModels(settings.hordeApiKey);
-        // Sort by count or name
-        const modelNames = m.map((x: any) => x.name).slice(0, 50); // Take top 50
-        if (modelNames.length > 0) setModels(modelNames);
-    };
-    fetchModels();
-  }, [settings.hordeApiKey]);
 
   // Save Settings
   const handleSaveSettings = (newSettings: AppSettings) => {
@@ -193,15 +185,10 @@ const App: React.FC = () => {
                     <select 
                         value={selectedModel}
                         onChange={(e) => setSelectedModel(e.target.value)}
-                        className="w-full bg-dark-900 border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none"
+                        className="w-full bg-dark-900 border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none opacity-70 cursor-not-allowed"
+                        disabled
                     >
-                        <option value="Anything-V5">Anything V5</option>
-                        <option value="stable_diffusion_xl">SDXL 1.0</option>
-                        <option value="Deliberate">Deliberate</option>
-                        <option value="ICBINP - I Can't Believe It's Not Photography">ICBINP</option>
-                        {models.map(m => (
-                            <option key={m} value={m}>{m}</option>
-                        ))}
+                        <option value="AlbedoBase XL (SDXL)">AlbedoBase XL (SDXL)</option>
                     </select>
                  </div>
                  <div>
@@ -214,10 +201,10 @@ const App: React.FC = () => {
                         }}
                         className="w-full bg-dark-900 border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none"
                     >
-                        <option value="512x512">Square (512x512)</option>
-                        <option value="512x768">Portrait (512x768)</option>
-                        <option value="768x512">Landscape (768x512)</option>
-                        <option value="1024x1024">HD Square (1024x1024)</option>
+                        <option value="1024x1024">Square (1024x1024)</option>
+                        <option value="896x1152">Portrait (896x1152)</option>
+                        <option value="1152x896">Landscape (1152x896)</option>
+                        <option value="1024x1536">Tall (1024x1536)</option>
                     </select>
                  </div>
               </div>
