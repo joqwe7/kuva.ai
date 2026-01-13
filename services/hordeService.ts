@@ -11,7 +11,7 @@ export const generateImage = async (
     headers: {
       'apikey': apiKey,
       'Content-Type': 'application/json',
-      'Client-Agent': 'HordeGen-SaaS-Demo:v1.0.0:admin@example.com',
+      'Client-Agent': 'RikuxAI:v1.0.0:admin@example.com',
     },
     body: JSON.stringify(request),
   });
@@ -32,7 +32,7 @@ export const checkGenerationStatus = async (
     method: 'GET',
     headers: {
       'apikey': apiKey,
-      'Client-Agent': 'HordeGen-SaaS-Demo:v1.0.0:admin@example.com',
+      'Client-Agent': 'RikuxAI:v1.0.0:admin@example.com',
     },
   });
 
@@ -49,7 +49,7 @@ export const getModels = async (apiKey: string = DEFAULT_HORDE_API_KEY): Promise
         const response = await fetch(`${BASE_URL}/status/models?type=image`, {
              headers: {
                 'apikey': apiKey,
-                'Client-Agent': 'HordeGen-SaaS-Demo:v1.0.0:admin@example.com',
+                'Client-Agent': 'RikuxAI:v1.0.0:admin@example.com',
             }
         });
         if(response.ok) {

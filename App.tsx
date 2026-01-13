@@ -10,7 +10,7 @@ const PLACEHOLDER_IMG = "https://picsum.photos/1024/1024?grayscale&blur=2";
 const App: React.FC = () => {
   // State
   const [settings, setSettings] = useState<AppSettings>(() => {
-    const saved = localStorage.getItem('hordegen-settings');
+    const saved = localStorage.getItem('rikuxai-settings');
     return saved ? JSON.parse(saved) : { hordeApiKey: DEFAULT_HORDE_API_KEY };
   });
 
@@ -32,7 +32,7 @@ const App: React.FC = () => {
   // Save Settings
   const handleSaveSettings = (newSettings: AppSettings) => {
     setSettings(newSettings);
-    localStorage.setItem('hordegen-settings', JSON.stringify(newSettings));
+    localStorage.setItem('rikuxai-settings', JSON.stringify(newSettings));
   };
 
   // Submit Job
@@ -134,7 +134,7 @@ const App: React.FC = () => {
             <div className="w-8 h-8 bg-gradient-to-tr from-brand-600 to-cyan-400 rounded-lg flex items-center justify-center shadow-lg shadow-brand-500/20">
               <i className="fas fa-cube text-white text-sm"></i>
             </div>
-            <span className="font-bold text-xl tracking-tight text-white">Horde<span className="text-brand-500">Gen</span></span>
+            <span className="font-bold text-xl tracking-tight text-white">Rikux<span className="text-brand-500">AI</span></span>
           </div>
           <div className="flex items-center space-x-4">
              <div className="hidden md:flex text-xs text-slate-500 space-x-4">
