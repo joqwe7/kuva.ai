@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AppSettings, DEFAULT_HORDE_API_KEY } from '../types';
+import { AppSettings, DEFAULT_HORDE_API_KEY, DEFAULT_HF_TOKEN } from '../types';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -16,6 +16,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
 }) => {
   const [localSettings, setLocalSettings] = useState<AppSettings>(settings);
   const [showHordeKey, setShowHordeKey] = useState(false);
+  const [showHfKey, setShowHfKey] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -35,17 +36,18 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </button>
         </div>
 
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-300 mb-1">
-              AI Horde API Key
+        <div className="space-y-6">
+          {/* AI Horde Settings */}
+          <div className="p-4 bg-dark-900 rounded-lg border border-slate-800">
+            <label className="block text-sm font-medium text-slate-300 mb-1 flex items-center">
+              <i className="fas fa-cubes mr-2 text-blue-500"></i> AI Horde API Key
             </label>
             <div className="relative">
                 <input
                 type={showHordeKey ? "text" : "password"}
                 value={localSettings.hordeApiKey}
                 onChange={(e) => setLocalSettings(prev => ({ ...prev, hordeApiKey: e.target.value }))}
-                className="w-full bg-dark-900 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                className="w-full bg-dark-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
                 placeholder={DEFAULT_HORDE_API_KEY}
                 />
                 <button 
@@ -56,8 +58,34 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                     <i className={`fas ${showHordeKey ? 'fa-eye-slash' : 'fa-eye'}`}></i>
                 </button>
             </div>
-            <p className="text-xs text-slate-500 mt-1">
-              Use default for anonymous (low priority) or your own for higher priority.
+            <p className="text-[10px] text-slate-500 mt-1">
+              For distributed community cluster. Leave default for anonymous.
+            </p>
+          </div>
+
+          {/* Hugging Face Settings */}
+          <div className="p-4 bg-dark-900 rounded-lg border border-slate-800">
+            <label className="block text-sm font-medium text-slate-300 mb-1 flex items-center">
+              <i className="fas fa-bolt mr-2 text-yellow-500"></i> Hugging Face Token
+            </label>
+            <div className="relative">
+                <input
+                type={showHfKey ? "text" : "password"}
+                value={localSettings.huggingFaceToken}
+                onChange={(e) => setLocalSettings(prev => ({ ...prev, huggingFaceToken: e.target.value }))}
+                className="w-full bg-dark-800 border border-slate-700 rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500"
+                placeholder={DEFAULT_HF_TOKEN}
+                />
+                <button 
+                    type="button"
+                    onClick={() => setShowHfKey(!showHfKey)}
+                    className="absolute right-3 top-2.5 text-slate-500 hover:text-slate-300"
+                >
+                    <i className={`fas ${showHfKey ? 'fa-eye-slash' : 'fa-eye'}`}></i>
+                </button>
+            </div>
+            <p className="text-[10px] text-slate-500 mt-1">
+              For fast Flux.1 inference. Requires a valid HF Token with inference permissions.
             </p>
           </div>
         </div>

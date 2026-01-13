@@ -73,6 +73,8 @@ export enum GenerationStatus {
   FAILED = 'FAILED',
 }
 
+export type BackendType = 'HORDE' | 'HUGGINGFACE';
+
 export interface Job {
   id: string;
   prompt: string;
@@ -81,10 +83,15 @@ export interface Job {
   createdAt: number;
   params: HordeGenerationRequest['params'];
   model: string;
+  backend: BackendType;
 }
 
 export interface AppSettings {
   hordeApiKey: string;
+  huggingFaceToken: string;
 }
 
-export const DEFAULT_HORDE_API_KEY = "Gz6yGj7lwWzX9qz70rqyEA"; // Public anonymous key
+// Keys removed from source code for security.
+// Use VITE_HORDE_API_KEY and VITE_HF_TOKEN in your .env file
+export const DEFAULT_HORDE_API_KEY = import.meta.env.VITE_HORDE_API_KEY || ""; 
+export const DEFAULT_HF_TOKEN = import.meta.env.VITE_HF_TOKEN || "";

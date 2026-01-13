@@ -9,10 +9,14 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
       rel="stylesheet"
     />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
           extend: {
+            fontFamily: {
+              sans: ['Space Grotesk', 'sans-serif'],
+            },
             colors: {
               brand: {
                 50: '#f0f9ff',
@@ -27,8 +31,17 @@
                 900: '#11111b',
               }
             },
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
+            animation: {
+              'blob': 'blob 7s infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            },
+            keyframes: {
+              blob: {
+                '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                '100%': { transform: 'translate(0px, 0px) scale(1)' },
+              }
             }
           }
         }
@@ -36,23 +49,43 @@
     </script>
     <style>
       body {
-        background-color: #11111b;
-        color: #cdd6f4;
+        background-color: #0f172a;
+        color: #e2e8f0;
       }
       /* Custom scrollbar */
       ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
+        width: 6px;
+        height: 6px;
       }
       ::-webkit-scrollbar-track {
-        background: #1e1e2e; 
+        background: transparent; 
       }
       ::-webkit-scrollbar-thumb {
-        background: #45475a; 
-        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.1); 
+        border-radius: 10px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #585b70; 
+        background: rgba(255, 255, 255, 0.2); 
+      }
+      
+      .glass {
+        background: rgba(30, 41, 59, 0.4);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      
+      .glass-panel {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .gradient-text {
+        background: linear-gradient(to right, #38bdf8, #818cf8, #c084fc);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     </style>
 <script type="importmap">
@@ -62,7 +95,8 @@
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "vite": "https://esm.sh/vite@^7.3.1",
     "react": "https://esm.sh/react@^19.2.3",
-    "react/": "https://esm.sh/react@^19.2.3/"
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "@huggingface/inference": "https://esm.sh/@huggingface/inference@^4.13.7"
   }
 }
 </script>
